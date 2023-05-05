@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+        <main class="container">
+                <section class="row">
+                        <div class="col-12">
+                              <h1>Accueil</h1>
+                              <p>Bienvenue sur le site de la boutique</p>
+                        </div>
+
+                        <div class="col-12">
+                           
+                                 {% for category in categories %}
+                                         {% if category.parent == null %}
+                                 
+                                        <div class="btn-group dropright">
+
+                                         <!-- Example single danger button -->
+                                   
+                                          <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {{ category.name }}                                                    
+                                         </button>    
+                                                  <div class="dropdown-menu">
+                                                  {% for categorie in categories %}
+                                                         {% if categorie.parent == category %}
+                                                               <a class="dropdown-item" href="{{ path('categories_list',{slug:categorie.name})}}">{{categorie.name}}</a>                                                           
+                                                         {% endif %}
+                                                   {% endfor %}
+                                                   </div>
+                                     
+                                     
+                                          </div>
+                                {% endif %}
+                                 {% endfor %} 
+                        </div>
+                    
+
+                       
+
+                </section>
+        </main>
+{% endblock %}
