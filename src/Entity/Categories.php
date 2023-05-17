@@ -151,4 +151,11 @@ class Categories
         return $this;
     }
 
+    // Dans la classe Categories
+    public function __toString()
+    {
+        return $this->getName(); // Ou toute autre propriété que vous souhaitez utiliser comme représentation de la catégorie en tant que chaîne de caractères
+    }
+
+
 }

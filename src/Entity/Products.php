@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductsRepository::class)]
 class Products
@@ -17,6 +18,7 @@ class Products
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:'Le nom du produit ne peux pas etre vide')]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -26,6 +28,7 @@ class Products
     private ?int $price = null;
 
     #[ORM\Column]
+    #[Assert\PositiveOrZero( message: 'le stock ne peut pas etre négatif')]
     private ?int $stock = null;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -36,7 +39,7 @@ class Products
     #[ORM\JoinColumn(nullable: false)]
     private ?Categories $categories = null;
 
-    #[ORM\OneToMany(mappedBy: 'products', targetEntity: Images::class)]
+    #[ORM\OneToMany(mappedBy: 'products', targetEntity: Images::class , orphanRemoval: true , cascade:['persist'])]
     private Collection $images;
 
     #[ORM\Column (options:['default'=>'CURRENT_TIMESTAMP'])]
@@ -141,7 +144,7 @@ class Products
     public function addImage(Images $image): self
     {
         if (!$this->images->contains($image)) {
-            $this->images->add($image);
+            $this->images[] = $image;
             $image->setProducts($this);
         }
 

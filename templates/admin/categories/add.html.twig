@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+{% block title %}Administration des categories{% endblock %}
+{% block body %}
+<main class="container">
+    <section class="row">
+<div class="col-12">        
+            <h1>Ajouter une categorie  </h1>
+        
+           <div class="example-wrapper">
+        
+            {{ form_start(categorieForm) }}
+        
+            {{ form_row(categorieForm.name) }}
+            {{ form_row(categorieForm.parent) }}
+
+
+            <br>
+            <button type="submit" class="btn btn-primary">{{ button_label|default('Ajouter') }}</button>
+            {{ form_end(categorieForm) }}
+        </div>
+        </div>
+    </section>
+</main>
+
+{% endblock %}
